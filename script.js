@@ -7,8 +7,6 @@ const SUPABASE_CONFIG = {
   loginResolverRpc: "resolve_login_email",
 };
 
-const MOOGLE_PREFILL_KEY = "thesikkerhet.moogle.prefill";
-
 const appState = {
   currentView: "login",
   session: null,
@@ -49,9 +47,8 @@ document.addEventListener("DOMContentLoaded", () => {
 async function bootstrap() {
   cacheElements();
   bindEvents();
-  setAuthView(resolveInitialAuthView());
+  setAuthView("login");
   showAuthView();
-  hydrateAuthPrefill();
   initializeSupabaseClient();
 
   await Promise.allSettled([loadAuthSettings(), checkProjectResources()]);
@@ -252,14 +249,12 @@ async function syncSession(session) {
   if (!appState.user) {
     appState.profile = null;
     elements.applicationForm.reset();
-    setAuthView(resolveInitialAuthView());
-    hydrateAuthPrefill();
+    setAuthView("login");
     showAuthView();
     return;
   }
 
   appState.profile = await ensureProfileForUser(appState.user);
-  clearMooglePrefill();
   showApplicationView(appState.profile || buildFallbackProfile(appState.user));
 }
 
@@ -318,39 +313,6 @@ async function handleGoogleLogin() {
   window.location.href = "google-auth.html";
 }
 
-function resolveInitialAuthView() {
-  const params = new URLSearchParams(window.location.search);
-  const requestedView = String(params.get("view") || "").trim().toLowerCase();
-  return requestedView === "register" ? "register" : "login";
-}
-
-function hydrateAuthPrefill() {
-  const params = new URLSearchParams(window.location.search);
-  const queryIdentifier = String(params.get("identifier") || "").trim();
-  const storedIdentifier = String(window.localStorage.getItem(MOOGLE_PREFILL_KEY) || "").trim();
-  const resolvedIdentifier = queryIdentifier || storedIdentifier;
-
-  if (!resolvedIdentifier) {
-    return;
-  }
-
-  if (elements.loginForm?.elements?.identifier && !elements.loginForm.elements.identifier.value) {
-    elements.loginForm.elements.identifier.value = resolvedIdentifier;
-  }
-
-  if (
-    isValidEmail(resolvedIdentifier) &&
-    elements.registerForm?.elements?.correo &&
-    !elements.registerForm.elements.correo.value
-  ) {
-    elements.registerForm.elements.correo.value = resolvedIdentifier;
-  }
-}
-
-function clearMooglePrefill() {
-  window.localStorage.removeItem(MOOGLE_PREFILL_KEY);
-}
-
 async function handleLoginSubmit(event) {
   event.preventDefault();
   clearFieldErrors(elements.loginForm);
@@ -392,7 +354,6 @@ async function handleLoginSubmit(event) {
     }
 
     elements.loginForm.reset();
-    clearMooglePrefill();
     showMessage(
       elements.applicationMessage,
       "success",
@@ -448,7 +409,6 @@ async function handleRegisterSubmit(event) {
     }
 
     elements.registerForm.reset();
-    clearMooglePrefill();
     setAuthView("login");
     elements.loginForm.elements.identifier.value = payload.correo;
 

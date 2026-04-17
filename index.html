@@ -89,11 +89,11 @@
       <main class="px-6 pb-16 pt-10 lg:px-8 lg:pt-14">
         <div id="system-banner" class="mx-auto mb-8 hidden max-w-7xl form-message" aria-live="polite"></div>
 
-        <section id="auth-shell" class="auth-shell-frame mx-auto max-w-7xl">
-          <div class="auth-showcase-pane space-y-6">
+        <section id="auth-shell" class="mx-auto grid max-w-7xl gap-8 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
+          <div class="space-y-6">
             <div class="inline-flex items-center gap-2 rounded-full border border-brand-400/20 bg-brand-500/10 px-4 py-2 text-sm font-semibold text-brand-100">
               <i class="fa-solid fa-wave-square text-brand-400"></i>
-              Recruitment intelligence
+              Plataforma de reclutamiento segura y moderna
             </div>
 
             <div class="space-y-5">
@@ -151,35 +151,31 @@
             </div>
           </div>
 
-          <div class="auth-login-pane glass-card rounded-[2rem] p-6 sm:p-8">
-            <div class="auth-brand-mark">
-              <i class="fa-solid fa-shield-star"></i>
-            </div>
-
-            <div class="auth-form-header">
+          <div class="glass-card rounded-[2rem] p-6 shadow-glow sm:p-8">
+            <div class="mb-8 flex items-center justify-between gap-4">
               <div>
-                <span id="auth-chip" class="auth-chip-pill">
+                <span id="auth-chip" class="status-pill">
                   <i class="fa-solid fa-lock text-brand-400"></i>
                   Acceso seguro
                 </span>
-                <h2 id="auth-title" class="auth-main-title">
+                <h2 id="auth-title" class="mt-4 font-display text-3xl font-semibold tracking-tight text-white">
                   Inicia sesión
                 </h2>
-                <p id="auth-subtitle" class="auth-main-subtitle">
+                <p id="auth-subtitle" class="mt-2 text-sm leading-6 text-slate-400">
                   Accede a tu perfil de candidato y continúa con tu solicitud.
                 </p>
               </div>
-              <div class="auth-icon-frame">
+              <div class="hidden h-14 w-14 items-center justify-center rounded-2xl border border-white/10 bg-white/5 text-brand-400 sm:flex">
                 <i id="auth-icon" class="fa-solid fa-fingerprint text-xl"></i>
               </div>
             </div>
 
             <div id="auth-message" class="form-message hidden" aria-live="polite"></div>
 
-            <form id="login-form" class="auth-form-stack" novalidate>
+            <form id="login-form" class="space-y-5" novalidate>
               <label class="block space-y-2" data-field="identifier">
                 <span class="text-sm font-medium text-slate-200">Usuario o correo electrónico</span>
-                <div class="input-shell auth-input-shell">
+                <div class="input-shell">
                   <i class="fa-regular fa-user text-slate-400"></i>
                   <input
                     class="form-input"
@@ -195,7 +191,7 @@
 
               <label class="block space-y-2" data-field="password">
                 <span class="text-sm font-medium text-slate-200">Contraseña</span>
-                <div class="input-shell auth-input-shell">
+                <div class="input-shell">
                   <i class="fa-solid fa-key text-slate-400"></i>
                   <input
                     class="form-input"
@@ -209,52 +205,32 @@
                 <p class="field-error hidden" data-error-for="password"></p>
               </label>
 
-              <div class="auth-helper-row">
-                <label class="remember-check">
-                  <input type="checkbox" name="remember" />
-                  <span>Remember me</span>
-                </label>
-                <button type="button" class="auth-link-btn" title="Recovery flow coming soon">
-                  Forgot password
-                </button>
-              </div>
-
-              <button type="submit" class="primary-btn auth-submit-btn w-full">
+              <button type="submit" class="primary-btn w-full">
                 <i class="fa-solid fa-arrow-right-to-bracket"></i>
                 Iniciar sesión
               </button>
 
-              <div class="auth-divider">
-                <span>Or login with</span>
-              </div>
-
-              <div class="auth-social-grid">
-              <button type="button" id="google-login" class="social-auth-btn">
-                <i class="fa-solid fa-wand-magic-sparkles text-orange-500"></i>
+              <button type="button" id="google-login" class="secondary-btn w-full">
+                <i class="fa-solid fa-wand-magic-sparkles"></i>
                 Registrarse con Moogle
               </button>
-              <button type="button" class="social-auth-btn" title="Available soon">
-                <i class="fa-brands fa-apple"></i>
-                Apple
-              </button>
-              </div>
 
-              <p class="auth-footer-copy">
+              <p class="text-center text-sm text-slate-400">
                 ¿No tienes cuenta?
                 <button
                   id="show-register"
                   type="button"
-                  class="auth-inline-link"
+                  class="font-semibold text-brand-300 transition hover:text-brand-200"
                 >
                   Regístrate
                 </button>
               </p>
             </form>
 
-            <form id="register-form" class="hidden auth-form-stack" novalidate>
+            <form id="register-form" class="hidden space-y-5" novalidate>
               <label class="block space-y-2" data-field="nombre">
                 <span class="text-sm font-medium text-slate-200">Nombre completo</span>
-                <div class="input-shell auth-input-shell">
+                <div class="input-shell">
                   <i class="fa-regular fa-id-card text-slate-400"></i>
                   <input
                     class="form-input"
@@ -271,7 +247,7 @@
               <div class="grid gap-5 sm:grid-cols-2">
                 <label class="block space-y-2" data-field="usuario">
                   <span class="text-sm font-medium text-slate-200">Usuario</span>
-                  <div class="input-shell auth-input-shell">
+                  <div class="input-shell">
                     <i class="fa-solid fa-at text-slate-400"></i>
                     <input
                       class="form-input"
@@ -287,7 +263,7 @@
 
                 <label class="block space-y-2" data-field="correo">
                   <span class="text-sm font-medium text-slate-200">Correo electrónico</span>
-                  <div class="input-shell auth-input-shell">
+                  <div class="input-shell">
                     <i class="fa-regular fa-envelope text-slate-400"></i>
                     <input
                       class="form-input"
@@ -305,7 +281,7 @@
               <div class="grid gap-5 sm:grid-cols-2">
                 <label class="block space-y-2" data-field="password">
                   <span class="text-sm font-medium text-slate-200">Contraseña</span>
-                  <div class="input-shell auth-input-shell">
+                  <div class="input-shell">
                     <i class="fa-solid fa-lock text-slate-400"></i>
                     <input
                       class="form-input"
@@ -321,7 +297,7 @@
 
                 <label class="block space-y-2" data-field="confirmPassword">
                   <span class="text-sm font-medium text-slate-200">Confirmar contraseña</span>
-                  <div class="input-shell auth-input-shell">
+                  <div class="input-shell">
                     <i class="fa-solid fa-check-double text-slate-400"></i>
                     <input
                       class="form-input"
@@ -336,17 +312,17 @@
                 </label>
               </div>
 
-              <button type="submit" class="primary-btn auth-submit-btn w-full">
+              <button type="submit" class="primary-btn w-full">
                 <i class="fa-solid fa-user-check"></i>
                 Registrarse
               </button>
 
-              <p class="auth-footer-copy">
+              <p class="text-center text-sm text-slate-400">
                 ¿Ya tienes cuenta?
                 <button
                   id="show-login"
                   type="button"
-                  class="auth-inline-link"
+                  class="font-semibold text-brand-300 transition hover:text-brand-200"
                 >
                   Inicia sesión
                 </button>
