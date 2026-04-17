@@ -1,0 +1,1224 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TheSikkerhet | Reclutamiento</title>
+    <meta
+      name="description"
+      content="Plataforma de reclutamiento TheSikkerhet para registro, inicio de sesión y solicitud de empleo."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Sora:wght@500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ["Manrope", "sans-serif"],
+              display: ["Sora", "sans-serif"],
+            },
+            boxShadow: {
+              glow: "0 20px 80px rgba(14, 165, 233, 0.18)",
+            },
+            colors: {
+              brand: {
+                400: "#38bdf8",
+                500: "#0ea5e9",
+              },
+              accent: {
+                400: "#34d399",
+                500: "#10b981",
+              },
+            },
+          },
+        },
+      };
+    </script>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body class="theme-light bg-slate-50 text-slate-900 antialiased">
+    <div class="ambient-orb orb-a"></div>
+    <div class="ambient-orb orb-b"></div>
+    <div class="ambient-orb orb-c"></div>
+
+    <div class="relative z-10 min-h-screen">
+      <nav class="sticky top-0 z-30 border-b border-white/8 bg-slate-950/75 backdrop-blur-xl">
+        <div class="mx-auto flex max-w-7xl items-center justify-between px-6 py-4 lg:px-8">
+          <div class="flex items-center gap-4">
+            <div class="flex h-12 w-12 items-center justify-center rounded-2xl border border-white/10 bg-white/5 shadow-glow">
+              <i class="fa-solid fa-shield-halved text-lg text-brand-400"></i>
+            </div>
+            <div>
+              <p class="font-display text-lg font-semibold tracking-tight text-white">TheSikkerhet</p>
+              <p class="text-xs uppercase tracking-[0.3em] text-slate-400">Recruitment System</p>
+            </div>
+          </div>
+
+          <div class="flex items-center gap-3">
+            <span class="status-pill hidden sm:inline-flex">
+              <i class="fa-solid fa-sparkles text-accent-400"></i>
+              Talent Pipeline
+            </span>
+            <div id="session-chip" class="hidden items-center gap-2 rounded-full border border-brand-400/20 bg-brand-500/10 px-4 py-2 text-sm text-brand-100">
+              <i class="fa-regular fa-circle-check text-brand-400"></i>
+              <span id="session-chip-text">Sesión activa</span>
+            </div>
+            <button
+              id="logout-button"
+              type="button"
+              class="hidden rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm font-semibold text-slate-200 transition hover:border-brand-400/30 hover:bg-brand-500/10 hover:text-white"
+            >
+              Cerrar sesión
+            </button>
+          </div>
+        </div>
+      </nav>
+
+      <main class="px-6 pb-16 pt-10 lg:px-8 lg:pt-14">
+        <div id="system-banner" class="mx-auto mb-8 hidden max-w-7xl form-message" aria-live="polite"></div>
+
+        <section id="auth-shell" class="auth-shell-frame mx-auto max-w-7xl">
+          <div class="auth-showcase-pane space-y-6">
+            <div class="inline-flex items-center gap-2 rounded-full border border-brand-400/20 bg-brand-500/10 px-4 py-2 text-sm font-semibold text-brand-100">
+              <i class="fa-solid fa-wave-square text-brand-400"></i>
+              Recruitment intelligence
+            </div>
+
+            <div class="space-y-5">
+              <h1 class="max-w-3xl font-display text-4xl font-semibold tracking-tight text-white sm:text-5xl lg:text-6xl">
+                Gestión de talento con experiencia
+                <span class="brand-gradient">tipo SaaS</span>
+              </h1>
+              <p class="max-w-2xl text-base leading-8 text-slate-300 sm:text-lg">
+                Centraliza registro, autenticación y postulaciones para TheSikkerhet en una interfaz clara,
+                elegante y lista para integrarse con Supabase.
+              </p>
+            </div>
+
+            <div class="grid gap-4 sm:grid-cols-3">
+              <article class="glass-card rounded-3xl p-5">
+                <div class="icon-wrap">
+                  <i class="fa-solid fa-user-plus text-brand-400"></i>
+                </div>
+                <h2 class="mt-4 text-sm font-semibold text-white">Registro ágil</h2>
+                <p class="mt-2 text-sm leading-6 text-slate-400">Formulario validado y envío JSON listo para endpoint.</p>
+              </article>
+              <article class="glass-card rounded-3xl p-5">
+                <div class="icon-wrap">
+                  <i class="fa-solid fa-bolt text-accent-400"></i>
+                </div>
+                <h2 class="mt-4 text-sm font-semibold text-white">Flujo fluido</h2>
+                <p class="mt-2 text-sm leading-6 text-slate-400">Cambio entre login y registro sin recargar la página.</p>
+              </article>
+              <article class="glass-card rounded-3xl p-5">
+                <div class="icon-wrap">
+                  <i class="fa-solid fa-database text-brand-400"></i>
+                </div>
+                <h2 class="mt-4 text-sm font-semibold text-white">Preparado para Supabase</h2>
+                <p class="mt-2 text-sm leading-6 text-slate-400">Estructura `fetch` configurable para tablas y endpoints.</p>
+              </article>
+            </div>
+
+            <div class="glass-card rounded-[2rem] p-6">
+              <div class="grid gap-4 sm:grid-cols-2">
+                <div class="rounded-2xl border border-white/10 bg-white/5 p-4">
+                  <p class="text-xs uppercase tracking-[0.28em] text-slate-500">Validación</p>
+                  <p class="mt-3 text-lg font-semibold text-white">Errores claros y en tiempo real</p>
+                  <p class="mt-2 text-sm leading-6 text-slate-400">
+                    Campos obligatorios, verificación de correo y coincidencia de contraseñas.
+                  </p>
+                </div>
+                <div class="rounded-2xl border border-white/10 bg-white/5 p-4">
+                  <p class="text-xs uppercase tracking-[0.28em] text-slate-500">Postulación</p>
+                  <p class="mt-3 text-lg font-semibold text-white">Solicitud completa y segmentada</p>
+                  <p class="mt-2 text-sm leading-6 text-slate-400">
+                    Información personal, experiencia, habilidades, documentos y referencias.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="auth-login-pane glass-card rounded-[2rem] p-6 sm:p-8">
+            <div class="auth-brand-mark">
+              <i class="fa-solid fa-shield-star"></i>
+            </div>
+
+            <div class="auth-form-header">
+              <div>
+                <span id="auth-chip" class="auth-chip-pill">
+                  <i class="fa-solid fa-lock text-brand-400"></i>
+                  Acceso seguro
+                </span>
+                <h2 id="auth-title" class="auth-main-title">
+                  Inicia sesión
+                </h2>
+                <p id="auth-subtitle" class="auth-main-subtitle">
+                  Accede a tu perfil de candidato y continúa con tu solicitud.
+                </p>
+              </div>
+              <div class="auth-icon-frame">
+                <i id="auth-icon" class="fa-solid fa-fingerprint text-xl"></i>
+              </div>
+            </div>
+
+            <div id="auth-message" class="form-message hidden" aria-live="polite"></div>
+
+            <form id="login-form" class="auth-form-stack" novalidate>
+              <label class="block space-y-2" data-field="identifier">
+                <span class="text-sm font-medium text-slate-200">Usuario o correo electrónico</span>
+                <div class="input-shell auth-input-shell">
+                  <i class="fa-regular fa-user text-slate-400"></i>
+                  <input
+                    class="form-input"
+                    id="login-identifier"
+                    name="identifier"
+                    type="text"
+                    autocomplete="username"
+                    placeholder="usuario@thesikkerhet.com"
+                  />
+                </div>
+                <p class="field-error hidden" data-error-for="identifier"></p>
+              </label>
+
+              <label class="block space-y-2" data-field="password">
+                <span class="text-sm font-medium text-slate-200">Contraseña</span>
+                <div class="input-shell auth-input-shell">
+                  <i class="fa-solid fa-key text-slate-400"></i>
+                  <input
+                    class="form-input"
+                    id="login-password"
+                    name="password"
+                    type="password"
+                    autocomplete="current-password"
+                    placeholder="••••••••"
+                  />
+                </div>
+                <p class="field-error hidden" data-error-for="password"></p>
+              </label>
+
+              <div class="auth-helper-row">
+                <label class="remember-check">
+                  <input type="checkbox" name="remember" />
+                  <span>Remember me</span>
+                </label>
+                <button type="button" class="auth-link-btn" title="Recovery flow coming soon">
+                  Forgot password
+                </button>
+              </div>
+
+              <button type="submit" class="primary-btn auth-submit-btn w-full">
+                <i class="fa-solid fa-arrow-right-to-bracket"></i>
+                Iniciar sesión
+              </button>
+
+              <div class="auth-divider">
+                <span>Or login with</span>
+              </div>
+
+              <div class="auth-social-grid">
+              <button type="button" id="google-login" class="social-auth-btn">
+                <i class="fa-solid fa-wand-magic-sparkles text-orange-500"></i>
+                Registrarse con Moogle
+              </button>
+              <button type="button" class="social-auth-btn" title="Available soon">
+                <i class="fa-brands fa-apple"></i>
+                Apple
+              </button>
+              </div>
+
+              <p class="auth-footer-copy">
+                ¿No tienes cuenta?
+                <button
+                  id="show-register"
+                  type="button"
+                  class="auth-inline-link"
+                >
+                  Regístrate
+                </button>
+              </p>
+            </form>
+
+            <form id="register-form" class="hidden auth-form-stack" novalidate>
+              <label class="block space-y-2" data-field="nombre">
+                <span class="text-sm font-medium text-slate-200">Nombre completo</span>
+                <div class="input-shell auth-input-shell">
+                  <i class="fa-regular fa-id-card text-slate-400"></i>
+                  <input
+                    class="form-input"
+                    id="register-name"
+                    name="nombre"
+                    type="text"
+                    autocomplete="name"
+                    placeholder="Nombre y apellido"
+                  />
+                </div>
+                <p class="field-error hidden" data-error-for="nombre"></p>
+              </label>
+
+              <div class="grid gap-5 sm:grid-cols-2">
+                <label class="block space-y-2" data-field="usuario">
+                  <span class="text-sm font-medium text-slate-200">Usuario</span>
+                  <div class="input-shell auth-input-shell">
+                    <i class="fa-solid fa-at text-slate-400"></i>
+                    <input
+                      class="form-input"
+                      id="register-username"
+                      name="usuario"
+                      type="text"
+                      autocomplete="username"
+                      placeholder="thesikkerhet.user"
+                    />
+                  </div>
+                  <p class="field-error hidden" data-error-for="usuario"></p>
+                </label>
+
+                <label class="block space-y-2" data-field="correo">
+                  <span class="text-sm font-medium text-slate-200">Correo electrónico</span>
+                  <div class="input-shell auth-input-shell">
+                    <i class="fa-regular fa-envelope text-slate-400"></i>
+                    <input
+                      class="form-input"
+                      id="register-email"
+                      name="correo"
+                      type="email"
+                      autocomplete="email"
+                      placeholder="correo@dominio.com"
+                    />
+                  </div>
+                  <p class="field-error hidden" data-error-for="correo"></p>
+                </label>
+              </div>
+
+              <div class="grid gap-5 sm:grid-cols-2">
+                <label class="block space-y-2" data-field="password">
+                  <span class="text-sm font-medium text-slate-200">Contraseña</span>
+                  <div class="input-shell auth-input-shell">
+                    <i class="fa-solid fa-lock text-slate-400"></i>
+                    <input
+                      class="form-input"
+                      id="register-password"
+                      name="password"
+                      type="password"
+                      autocomplete="new-password"
+                      placeholder="Crea una contraseña"
+                    />
+                  </div>
+                  <p class="field-error hidden" data-error-for="password"></p>
+                </label>
+
+                <label class="block space-y-2" data-field="confirmPassword">
+                  <span class="text-sm font-medium text-slate-200">Confirmar contraseña</span>
+                  <div class="input-shell auth-input-shell">
+                    <i class="fa-solid fa-check-double text-slate-400"></i>
+                    <input
+                      class="form-input"
+                      id="register-confirm-password"
+                      name="confirmPassword"
+                      type="password"
+                      autocomplete="new-password"
+                      placeholder="Repite la contraseña"
+                    />
+                  </div>
+                  <p class="field-error hidden" data-error-for="confirmPassword"></p>
+                </label>
+              </div>
+
+              <button type="submit" class="primary-btn auth-submit-btn w-full">
+                <i class="fa-solid fa-user-check"></i>
+                Registrarse
+              </button>
+
+              <p class="auth-footer-copy">
+                ¿Ya tienes cuenta?
+                <button
+                  id="show-login"
+                  type="button"
+                  class="auth-inline-link"
+                >
+                  Inicia sesión
+                </button>
+              </p>
+            </form>
+          </div>
+        </section>
+
+        <section id="application-shell" class="mx-auto hidden max-w-7xl space-y-6">
+          <header class="glass-card rounded-[2rem] p-6 lg:p-8">
+            <div class="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
+              <div class="max-w-3xl">
+                <span class="status-pill">
+                  <i class="fa-solid fa-briefcase text-accent-400"></i>
+                  Solicitud activa
+                </span>
+                <h2 class="mt-4 font-display text-3xl font-semibold tracking-tight text-white lg:text-4xl">
+                  Formulario de solicitud de empleo
+                </h2>
+                <p class="mt-3 text-sm leading-7 text-slate-400 sm:text-base">
+                  Completa tu información profesional para aplicar a TheSikkerhet. El flujo está preparado para enviar
+                  datos a un endpoint REST o a Supabase.
+                </p>
+              </div>
+
+              <div class="grid gap-4 sm:grid-cols-2">
+                <div class="rounded-2xl border border-white/10 bg-white/5 px-5 py-4">
+                  <p class="text-xs uppercase tracking-[0.28em] text-slate-500">Candidato</p>
+                  <p id="candidate-name" class="mt-2 text-lg font-semibold text-white">Perfil autenticado</p>
+                </div>
+                <div class="rounded-2xl border border-white/10 bg-white/5 px-5 py-4">
+                  <p class="text-xs uppercase tracking-[0.28em] text-slate-500">Estado</p>
+                  <p class="mt-2 text-lg font-semibold text-accent-300">Listo para enviar</p>
+                </div>
+              </div>
+            </div>
+          </header>
+
+          <div id="application-message" class="form-message hidden" aria-live="polite"></div>
+
+          <form id="application-form" class="space-y-6" novalidate>
+            <div class="grid gap-6 xl:grid-cols-[1.2fr_0.8fr]">
+              <article class="glass-card rounded-[2rem] p-6 lg:p-7">
+                <div class="section-header">
+                  <div class="icon-wrap">
+                    <i class="fa-regular fa-calendar-check text-brand-400"></i>
+                  </div>
+                  <div>
+                    <h3 class="text-lg font-semibold text-white">Solicitud de empleo</h3>
+                    <p class="text-sm text-slate-400">Datos generales de la postulación.</p>
+                  </div>
+                </div>
+                <div class="mt-6 grid gap-5 md:grid-cols-3">
+                  <label class="block space-y-2" data-field="applicationDate">
+                    <span class="text-sm font-medium text-slate-200">Fecha</span>
+                    <div class="input-shell">
+                      <i class="fa-regular fa-calendar text-slate-400"></i>
+                      <input class="form-input" name="applicationDate" type="date" />
+                    </div>
+                    <p class="field-error hidden" data-error-for="applicationDate"></p>
+                  </label>
+
+                  <label class="block space-y-2" data-field="desiredPosition">
+                    <span class="text-sm font-medium text-slate-200">Puesto solicitado</span>
+                    <div class="input-shell">
+                      <i class="fa-solid fa-briefcase text-slate-400"></i>
+                      <input class="form-input" name="desiredPosition" type="text" placeholder="Puesto solicitado" />
+                    </div>
+                    <p class="field-error hidden" data-error-for="desiredPosition"></p>
+                  </label>
+
+                  <label class="block space-y-2" data-field="desiredSalary">
+                    <span class="text-sm font-medium text-slate-200">Sueldo deseado</span>
+                    <div class="input-shell">
+                      <i class="fa-solid fa-wallet text-slate-400"></i>
+                      <input class="form-input" name="desiredSalary" type="text" placeholder="Sueldo deseado" />
+                    </div>
+                    <p class="field-error hidden" data-error-for="desiredSalary"></p>
+                  </label>
+                </div>
+              </article>
+
+              <article class="glass-card rounded-[2rem] p-6 lg:p-7">
+                <div class="section-header">
+                  <div class="icon-wrap">
+                    <i class="fa-regular fa-image text-accent-400"></i>
+                  </div>
+                  <div>
+                    <h3 class="text-lg font-semibold text-white">Fotografía</h3>
+                    <p class="text-sm text-slate-400">Puedes adjuntar una foto del candidato.</p>
+                  </div>
+                </div>
+                <label class="mt-6 block space-y-2">
+                  <span class="text-sm font-medium text-slate-200">Foto del solicitante <span class="text-slate-500">(opcional)</span></span>
+                  <div class="input-shell file-shell">
+                    <i class="fa-regular fa-id-badge text-slate-400"></i>
+                    <input class="form-input" name="applicantPhoto" type="file" accept=".png,.jpg,.jpeg,.webp" />
+                  </div>
+                </label>
+              </article>
+            </div>
+
+            <article class="glass-card rounded-[2rem] p-6 lg:p-7">
+              <div class="section-header">
+                <div class="icon-wrap">
+                  <i class="fa-regular fa-address-card text-brand-400"></i>
+                </div>
+                <div>
+                  <h3 class="text-lg font-semibold text-white">Datos personales</h3>
+                  <p class="text-sm text-slate-400">Información general del candidato.</p>
+                </div>
+              </div>
+
+              <div class="mt-6 grid gap-5 xl:grid-cols-4">
+                <label class="block space-y-2" data-field="surnamePaternal">
+                  <span class="text-sm font-medium text-slate-200">Apellido paterno</span>
+                  <div class="input-shell">
+                    <i class="fa-regular fa-user text-slate-400"></i>
+                    <input class="form-input" name="surnamePaternal" type="text" placeholder="Apellido paterno" />
+                  </div>
+                  <p class="field-error hidden" data-error-for="surnamePaternal"></p>
+                </label>
+
+                <label class="block space-y-2" data-field="surnameMaternal">
+                  <span class="text-sm font-medium text-slate-200">Apellido materno</span>
+                  <div class="input-shell">
+                    <i class="fa-regular fa-user text-slate-400"></i>
+                    <input class="form-input" name="surnameMaternal" type="text" placeholder="Apellido materno" />
+                  </div>
+                  <p class="field-error hidden" data-error-for="surnameMaternal"></p>
+                </label>
+
+                <label class="block space-y-2 xl:col-span-1" data-field="firstNames">
+                  <span class="text-sm font-medium text-slate-200">Nombres</span>
+                  <div class="input-shell">
+                    <i class="fa-solid fa-signature text-slate-400"></i>
+                    <input class="form-input" name="firstNames" type="text" placeholder="Nombres" />
+                  </div>
+                  <p class="field-error hidden" data-error-for="firstNames"></p>
+                </label>
+
+                <label class="block space-y-2" data-field="age">
+                  <span class="text-sm font-medium text-slate-200">Edad</span>
+                  <div class="input-shell">
+                    <i class="fa-solid fa-hourglass-start text-slate-400"></i>
+                    <input class="form-input" name="age" type="number" min="0" placeholder="Edad" />
+                  </div>
+                  <p class="field-error hidden" data-error-for="age"></p>
+                </label>
+
+                <label class="block space-y-2 xl:col-span-2" data-field="address">
+                  <span class="text-sm font-medium text-slate-200">Domicilio</span>
+                  <div class="input-shell">
+                    <i class="fa-solid fa-location-dot text-slate-400"></i>
+                    <input class="form-input" name="address" type="text" placeholder="Domicilio" />
+                  </div>
+                  <p class="field-error hidden" data-error-for="address"></p>
+                </label>
+
+                <label class="block space-y-2" data-field="colony">
+                  <span class="text-sm font-medium text-slate-200">Colonia</span>
+                  <div class="input-shell">
+                    <i class="fa-solid fa-map text-slate-400"></i>
+                    <input class="form-input" name="colony" type="text" placeholder="Colonia" />
+                  </div>
+                  <p class="field-error hidden" data-error-for="colony"></p>
+                </label>
+
+                <label class="block space-y-2" data-field="postalCode">
+                  <span class="text-sm font-medium text-slate-200">Código postal</span>
+                  <div class="input-shell">
+                    <i class="fa-solid fa-envelopes-bulk text-slate-400"></i>
+                    <input class="form-input" name="postalCode" type="text" placeholder="Código postal" />
+                  </div>
+                  <p class="field-error hidden" data-error-for="postalCode"></p>
+                </label>
+
+                <label class="block space-y-2" data-field="phone">
+                  <span class="text-sm font-medium text-slate-200">Teléfono</span>
+                  <div class="input-shell">
+                    <i class="fa-solid fa-phone text-slate-400"></i>
+                    <input class="form-input" name="phone" type="tel" placeholder="Teléfono fijo" />
+                  </div>
+                  <p class="field-error hidden" data-error-for="phone"></p>
+                </label>
+
+                <label class="block space-y-2" data-field="mobile">
+                  <span class="text-sm font-medium text-slate-200">Móvil</span>
+                  <div class="input-shell">
+                    <i class="fa-solid fa-mobile-screen text-slate-400"></i>
+                    <input class="form-input" name="mobile" type="tel" placeholder="Móvil" />
+                  </div>
+                  <p class="field-error hidden" data-error-for="mobile"></p>
+                </label>
+
+                <label class="block space-y-2" data-field="birthPlace">
+                  <span class="text-sm font-medium text-slate-200">Lugar de nacimiento</span>
+                  <div class="input-shell">
+                    <i class="fa-solid fa-earth-americas text-slate-400"></i>
+                    <input class="form-input" name="birthPlace" type="text" placeholder="Lugar de nacimiento" />
+                  </div>
+                  <p class="field-error hidden" data-error-for="birthPlace"></p>
+                </label>
+
+                <label class="block space-y-2" data-field="birthDate">
+                  <span class="text-sm font-medium text-slate-200">Fecha de nacimiento</span>
+                  <div class="input-shell">
+                    <i class="fa-regular fa-calendar-days text-slate-400"></i>
+                    <input class="form-input" name="birthDate" type="date" />
+                  </div>
+                  <p class="field-error hidden" data-error-for="birthDate"></p>
+                </label>
+
+                <label class="block space-y-2" data-field="nationality">
+                  <span class="text-sm font-medium text-slate-200">Nacionalidad</span>
+                  <div class="input-shell">
+                    <i class="fa-solid fa-flag text-slate-400"></i>
+                    <input class="form-input" name="nationality" type="text" placeholder="Nacionalidad" />
+                  </div>
+                  <p class="field-error hidden" data-error-for="nationality"></p>
+                </label>
+
+                <div class="space-y-2" data-field="sex">
+                  <span class="text-sm font-medium text-slate-200">Sexo</span>
+                  <div class="grid gap-3 sm:grid-cols-2">
+                    <label class="inline-flex items-center gap-3 rounded-2xl border border-white/10 bg-white/5 px-4 py-4 text-sm text-slate-300">
+                      <input class="h-4 w-4 border-white/20 bg-slate-900 text-brand-400 focus:ring-brand-400" name="sex" type="radio" value="Masculino" />
+                      Masculino
+                    </label>
+                    <label class="inline-flex items-center gap-3 rounded-2xl border border-white/10 bg-white/5 px-4 py-4 text-sm text-slate-300">
+                      <input class="h-4 w-4 border-white/20 bg-slate-900 text-brand-400 focus:ring-brand-400" name="sex" type="radio" value="Femenino" />
+                      Femenino
+                    </label>
+                  </div>
+                  <p class="field-error hidden" data-error-for="sex"></p>
+                </div>
+
+                <div class="space-y-2 xl:col-span-2" data-field="livesWith">
+                  <span class="text-sm font-medium text-slate-200">Vive con</span>
+                  <div class="grid gap-3 sm:grid-cols-2 xl:grid-cols-5">
+                    <label class="inline-flex items-center gap-3 rounded-2xl border border-white/10 bg-white/5 px-4 py-4 text-sm text-slate-300">
+                      <input class="h-4 w-4 rounded border-white/20 bg-slate-900 text-accent-400 focus:ring-accent-400" name="livesWith" type="checkbox" value="Sus padres" />
+                      Sus padres
+                    </label>
+                    <label class="inline-flex items-center gap-3 rounded-2xl border border-white/10 bg-white/5 px-4 py-4 text-sm text-slate-300">
+                      <input class="h-4 w-4 rounded border-white/20 bg-slate-900 text-accent-400 focus:ring-accent-400" name="livesWith" type="checkbox" value="Familiares" />
+                      Familiares
+                    </label>
+                    <label class="inline-flex items-center gap-3 rounded-2xl border border-white/10 bg-white/5 px-4 py-4 text-sm text-slate-300">
+                      <input class="h-4 w-4 rounded border-white/20 bg-slate-900 text-accent-400 focus:ring-accent-400" name="livesWith" type="checkbox" value="Parientes" />
+                      Parientes
+                    </label>
+                    <label class="inline-flex items-center gap-3 rounded-2xl border border-white/10 bg-white/5 px-4 py-4 text-sm text-slate-300">
+                      <input class="h-4 w-4 rounded border-white/20 bg-slate-900 text-accent-400 focus:ring-accent-400" name="livesWith" type="checkbox" value="Amigos" />
+                      Amigos
+                    </label>
+                    <label class="inline-flex items-center gap-3 rounded-2xl border border-white/10 bg-white/5 px-4 py-4 text-sm text-slate-300">
+                      <input class="h-4 w-4 rounded border-white/20 bg-slate-900 text-accent-400 focus:ring-accent-400" name="livesWith" type="checkbox" value="Solo" />
+                      Solo
+                    </label>
+                  </div>
+                  <p class="field-error hidden" data-error-for="livesWith"></p>
+                </div>
+
+                <div class="space-y-2" data-field="dependents">
+                  <span class="text-sm font-medium text-slate-200">Personas que dependen de usted</span>
+                  <div class="grid gap-3 sm:grid-cols-2">
+                    <label class="inline-flex items-center gap-3 rounded-2xl border border-white/10 bg-white/5 px-4 py-4 text-sm text-slate-300">
+                      <input class="h-4 w-4 rounded border-white/20 bg-slate-900 text-accent-400 focus:ring-accent-400" name="dependents" type="checkbox" value="Hijos" />
+                      Hijos
+                    </label>
+                    <label class="inline-flex items-center gap-3 rounded-2xl border border-white/10 bg-white/5 px-4 py-4 text-sm text-slate-300">
+                      <input class="h-4 w-4 rounded border-white/20 bg-slate-900 text-accent-400 focus:ring-accent-400" name="dependents" type="checkbox" value="Cónyuge" />
+                      Cónyuge
+                    </label>
+                    <label class="inline-flex items-center gap-3 rounded-2xl border border-white/10 bg-white/5 px-4 py-4 text-sm text-slate-300">
+                      <input class="h-4 w-4 rounded border-white/20 bg-slate-900 text-accent-400 focus:ring-accent-400" name="dependents" type="checkbox" value="Padres" />
+                      Padres
+                    </label>
+                    <label class="inline-flex items-center gap-3 rounded-2xl border border-white/10 bg-white/5 px-4 py-4 text-sm text-slate-300">
+                      <input class="h-4 w-4 rounded border-white/20 bg-slate-900 text-accent-400 focus:ring-accent-400" name="dependents" type="checkbox" value="Otros" />
+                      Otros
+                    </label>
+                  </div>
+                  <p class="field-error hidden" data-error-for="dependents"></p>
+                </div>
+
+                <label class="block space-y-2" data-field="height">
+                  <span class="text-sm font-medium text-slate-200">Estatura</span>
+                  <div class="input-shell">
+                    <i class="fa-solid fa-ruler-vertical text-slate-400"></i>
+                    <input class="form-input" name="height" type="text" placeholder="Estatura" />
+                  </div>
+                  <p class="field-error hidden" data-error-for="height"></p>
+                </label>
+
+                <label class="block space-y-2" data-field="weight">
+                  <span class="text-sm font-medium text-slate-200">Peso</span>
+                  <div class="input-shell">
+                    <i class="fa-solid fa-weight-scale text-slate-400"></i>
+                    <input class="form-input" name="weight" type="text" placeholder="Peso" />
+                  </div>
+                  <p class="field-error hidden" data-error-for="weight"></p>
+                </label>
+
+                <div class="space-y-2" data-field="maritalStatus">
+                  <span class="text-sm font-medium text-slate-200">Estado civil</span>
+                  <div class="grid gap-3 sm:grid-cols-3">
+                    <label class="inline-flex items-center gap-3 rounded-2xl border border-white/10 bg-white/5 px-4 py-4 text-sm text-slate-300">
+                      <input class="h-4 w-4 border-white/20 bg-slate-900 text-brand-400 focus:ring-brand-400" name="maritalStatus" type="radio" value="Soltero" />
+                      Soltero
+                    </label>
+                    <label class="inline-flex items-center gap-3 rounded-2xl border border-white/10 bg-white/5 px-4 py-4 text-sm text-slate-300">
+                      <input class="h-4 w-4 border-white/20 bg-slate-900 text-brand-400 focus:ring-brand-400" name="maritalStatus" type="radio" value="Casado" />
+                      Casado
+                    </label>
+                    <label class="inline-flex items-center gap-3 rounded-2xl border border-white/10 bg-white/5 px-4 py-4 text-sm text-slate-300">
+                      <input class="h-4 w-4 border-white/20 bg-slate-900 text-brand-400 focus:ring-brand-400" name="maritalStatus" type="radio" value="Otro" />
+                      Otro
+                    </label>
+                  </div>
+                  <p class="field-error hidden" data-error-for="maritalStatus"></p>
+                </div>
+              </div>
+            </article>
+
+            <article class="glass-card rounded-[2rem] p-6 lg:p-7">
+              <div class="section-header">
+                <div class="icon-wrap">
+                  <i class="fa-regular fa-folder-open text-accent-400"></i>
+                </div>
+                <div>
+                  <h3 class="text-lg font-semibold text-white">Documentación</h3>
+                  <p class="text-sm text-slate-400">Datos de identificación y permisos.</p>
+                </div>
+              </div>
+
+              <div class="mt-6 grid gap-5 lg:grid-cols-3">
+                <label class="block space-y-2" data-field="curpNumber">
+                  <span class="text-sm font-medium text-slate-200">Número de CURP</span>
+                  <div class="input-shell">
+                    <i class="fa-solid fa-fingerprint text-slate-400"></i>
+                    <input class="form-input" name="curpNumber" type="text" placeholder="Número de CURP" />
+                  </div>
+                  <p class="field-error hidden" data-error-for="curpNumber"></p>
+                </label>
+
+                <label class="block space-y-2">
+                  <span class="text-sm font-medium text-slate-200">Número de cartilla servicio militar</span>
+                  <div class="input-shell">
+                    <i class="fa-solid fa-shield text-slate-400"></i>
+                    <input class="form-input" name="militaryCardNumber" type="text" placeholder="Cartilla militar" />
+                  </div>
+                </label>
+
+                <label class="block space-y-2">
+                  <span class="text-sm font-medium text-slate-200">Número de pasaporte</span>
+                  <div class="input-shell">
+                    <i class="fa-solid fa-passport text-slate-400"></i>
+                    <input class="form-input" name="passportNumber" type="text" placeholder="Pasaporte" />
+                  </div>
+                </label>
+
+                <div class="space-y-2" data-field="driverLicense">
+                  <span class="text-sm font-medium text-slate-200">Licencia de manejo</span>
+                  <div class="grid gap-3 sm:grid-cols-2">
+                    <label class="inline-flex items-center gap-3 rounded-2xl border border-white/10 bg-white/5 px-4 py-4 text-sm text-slate-300">
+                      <input class="h-4 w-4 border-white/20 bg-slate-900 text-brand-400 focus:ring-brand-400" name="driverLicense" type="radio" value="Sí" />
+                      Sí
+                    </label>
+                    <label class="inline-flex items-center gap-3 rounded-2xl border border-white/10 bg-white/5 px-4 py-4 text-sm text-slate-300">
+                      <input class="h-4 w-4 border-white/20 bg-slate-900 text-brand-400 focus:ring-brand-400" name="driverLicense" type="radio" value="No" />
+                      No
+                    </label>
+                  </div>
+                  <p class="field-error hidden" data-error-for="driverLicense"></p>
+                </div>
+
+                <label class="block space-y-2" data-field="driverLicenseTypeNumber">
+                  <span class="text-sm font-medium text-slate-200">Tipo de licencia y número</span>
+                  <div class="input-shell">
+                    <i class="fa-solid fa-car text-slate-400"></i>
+                    <input class="form-input" name="driverLicenseTypeNumber" type="text" placeholder="Tipo y número de licencia" />
+                  </div>
+                  <p class="field-error hidden" data-error-for="driverLicenseTypeNumber"></p>
+                </label>
+
+                <label class="block space-y-2 lg:col-span-1">
+                  <span class="text-sm font-medium text-slate-200">Si es extranjero, documentación para trabajar</span>
+                  <div class="input-shell textarea-shell">
+                    <i class="fa-solid fa-file-shield text-slate-400"></i>
+                    <textarea class="form-input min-h-28 resize-none" name="foreignerWorkPermit" placeholder="Detalle de documentación migratoria o permiso de trabajo."></textarea>
+                  </div>
+                </label>
+              </div>
+            </article>
+
+            <article class="glass-card rounded-[2rem] p-6 lg:p-7">
+              <div class="section-header">
+                <div class="icon-wrap">
+                  <i class="fa-solid fa-heart-pulse text-brand-400"></i>
+                </div>
+                <div>
+                  <h3 class="text-lg font-semibold text-white">Hábitos personales</h3>
+                  <p class="text-sm text-slate-400">Condición personal y estilo de vida.</p>
+                </div>
+              </div>
+
+              <div class="mt-6 grid gap-5 lg:grid-cols-2">
+                <div class="space-y-2" data-field="healthStatus">
+                  <span class="text-sm font-medium text-slate-200">¿Cómo considera su estado de salud?</span>
+                  <div class="grid gap-3 sm:grid-cols-3">
+                    <label class="inline-flex items-center gap-3 rounded-2xl border border-white/10 bg-white/5 px-4 py-4 text-sm text-slate-300">
+                      <input class="h-4 w-4 border-white/20 bg-slate-900 text-brand-400 focus:ring-brand-400" name="healthStatus" type="radio" value="Buena" />
+                      Buena
+                    </label>
+                    <label class="inline-flex items-center gap-3 rounded-2xl border border-white/10 bg-white/5 px-4 py-4 text-sm text-slate-300">
+                      <input class="h-4 w-4 border-white/20 bg-slate-900 text-brand-400 focus:ring-brand-400" name="healthStatus" type="radio" value="Regular" />
+                      Regular
+                    </label>
+                    <label class="inline-flex items-center gap-3 rounded-2xl border border-white/10 bg-white/5 px-4 py-4 text-sm text-slate-300">
+                      <input class="h-4 w-4 border-white/20 bg-slate-900 text-brand-400 focus:ring-brand-400" name="healthStatus" type="radio" value="Mala" />
+                      Mala
+                    </label>
+                  </div>
+                  <p class="field-error hidden" data-error-for="healthStatus"></p>
+                </div>
+
+                <div class="space-y-2" data-field="chronicDiseaseOption">
+                  <span class="text-sm font-medium text-slate-200">¿Padece alguna enfermedad crónica?</span>
+                  <div class="grid gap-3 sm:grid-cols-2">
+                    <label class="inline-flex items-center gap-3 rounded-2xl border border-white/10 bg-white/5 px-4 py-4 text-sm text-slate-300">
+                      <input class="h-4 w-4 border-white/20 bg-slate-900 text-brand-400 focus:ring-brand-400" name="chronicDiseaseOption" type="radio" value="No" />
+                      No
+                    </label>
+                    <label class="inline-flex items-center gap-3 rounded-2xl border border-white/10 bg-white/5 px-4 py-4 text-sm text-slate-300">
+                      <input class="h-4 w-4 border-white/20 bg-slate-900 text-brand-400 focus:ring-brand-400" name="chronicDiseaseOption" type="radio" value="Sí" />
+                      Sí
+                    </label>
+                  </div>
+                  <p class="field-error hidden" data-error-for="chronicDiseaseOption"></p>
+                </div>
+
+                <label class="block space-y-2" data-field="chronicDiseaseDetails">
+                  <span class="text-sm font-medium text-slate-200">Si respondió sí, ¿cuál?</span>
+                  <div class="input-shell">
+                    <i class="fa-solid fa-notes-medical text-slate-400"></i>
+                    <input class="form-input" name="chronicDiseaseDetails" type="text" placeholder="Detalle la enfermedad" />
+                  </div>
+                  <p class="field-error hidden" data-error-for="chronicDiseaseDetails"></p>
+                </label>
+
+                <label class="block space-y-2" data-field="practicesSport">
+                  <span class="text-sm font-medium text-slate-200">¿Practica algún deporte?</span>
+                  <div class="input-shell">
+                    <i class="fa-solid fa-dumbbell text-slate-400"></i>
+                    <input class="form-input" name="practicesSport" type="text" placeholder="Deporte o actividad" />
+                  </div>
+                  <p class="field-error hidden" data-error-for="practicesSport"></p>
+                </label>
+
+                <label class="block space-y-2 lg:col-span-2" data-field="favoriteHobby">
+                  <span class="text-sm font-medium text-slate-200">Pasatiempo favorito</span>
+                  <div class="input-shell">
+                    <i class="fa-solid fa-star text-slate-400"></i>
+                    <input class="form-input" name="favoriteHobby" type="text" placeholder="Pasatiempo favorito" />
+                  </div>
+                  <p class="field-error hidden" data-error-for="favoriteHobby"></p>
+                </label>
+              </div>
+            </article>
+
+            <article class="glass-card rounded-[2rem] p-6 lg:p-7">
+              <div class="section-header">
+                <div class="icon-wrap">
+                  <i class="fa-solid fa-people-roof text-accent-400"></i>
+                </div>
+                <div>
+                  <h3 class="text-lg font-semibold text-white">Datos familiares</h3>
+                  <p class="text-sm text-slate-400">Información base del núcleo familiar.</p>
+                </div>
+              </div>
+
+              <div class="mt-6 space-y-6">
+                <div class="grid gap-4 lg:grid-cols-[1.1fr_0.9fr_1fr_1fr]">
+                  <label class="block space-y-2" data-field="fatherName">
+                    <span class="text-sm font-medium text-slate-200">Padre</span>
+                    <div class="input-shell">
+                      <i class="fa-solid fa-user text-slate-400"></i>
+                      <input class="form-input" name="fatherName" type="text" placeholder="Nombre del padre" />
+                    </div>
+                    <p class="field-error hidden" data-error-for="fatherName"></p>
+                  </label>
+
+                  <label class="block space-y-2" data-field="fatherStatus">
+                    <span class="text-sm font-medium text-slate-200">Estado</span>
+                    <div class="input-shell">
+                      <i class="fa-solid fa-heart-circle-check text-slate-400"></i>
+                      <select class="form-input" name="fatherStatus">
+                        <option value="">Selecciona</option>
+                        <option value="Vivo">Vivo</option>
+                        <option value="Finado">Finado</option>
+                      </select>
+                    </div>
+                    <p class="field-error hidden" data-error-for="fatherStatus"></p>
+                  </label>
+
+                  <label class="block space-y-2" data-field="fatherAddress">
+                    <span class="text-sm font-medium text-slate-200">Domicilio</span>
+                    <div class="input-shell">
+                      <i class="fa-solid fa-house text-slate-400"></i>
+                      <input class="form-input" name="fatherAddress" type="text" placeholder="Domicilio" />
+                    </div>
+                    <p class="field-error hidden" data-error-for="fatherAddress"></p>
+                  </label>
+
+                  <label class="block space-y-2" data-field="fatherOccupation">
+                    <span class="text-sm font-medium text-slate-200">Ocupación</span>
+                    <div class="input-shell">
+                      <i class="fa-solid fa-briefcase text-slate-400"></i>
+                      <input class="form-input" name="fatherOccupation" type="text" placeholder="Ocupación" />
+                    </div>
+                    <p class="field-error hidden" data-error-for="fatherOccupation"></p>
+                  </label>
+                </div>
+
+                <div class="grid gap-4 lg:grid-cols-[1.1fr_0.9fr_1fr_1fr]">
+                  <label class="block space-y-2" data-field="motherName">
+                    <span class="text-sm font-medium text-slate-200">Madre</span>
+                    <div class="input-shell">
+                      <i class="fa-solid fa-user text-slate-400"></i>
+                      <input class="form-input" name="motherName" type="text" placeholder="Nombre de la madre" />
+                    </div>
+                    <p class="field-error hidden" data-error-for="motherName"></p>
+                  </label>
+
+                  <label class="block space-y-2" data-field="motherStatus">
+                    <span class="text-sm font-medium text-slate-200">Estado</span>
+                    <div class="input-shell">
+                      <i class="fa-solid fa-heart-circle-check text-slate-400"></i>
+                      <select class="form-input" name="motherStatus">
+                        <option value="">Selecciona</option>
+                        <option value="Vivo">Vivo</option>
+                        <option value="Finado">Finado</option>
+                      </select>
+                    </div>
+                    <p class="field-error hidden" data-error-for="motherStatus"></p>
+                  </label>
+
+                  <label class="block space-y-2" data-field="motherAddress">
+                    <span class="text-sm font-medium text-slate-200">Domicilio</span>
+                    <div class="input-shell">
+                      <i class="fa-solid fa-house text-slate-400"></i>
+                      <input class="form-input" name="motherAddress" type="text" placeholder="Domicilio" />
+                    </div>
+                    <p class="field-error hidden" data-error-for="motherAddress"></p>
+                  </label>
+
+                  <label class="block space-y-2" data-field="motherOccupation">
+                    <span class="text-sm font-medium text-slate-200">Ocupación</span>
+                    <div class="input-shell">
+                      <i class="fa-solid fa-briefcase text-slate-400"></i>
+                      <input class="form-input" name="motherOccupation" type="text" placeholder="Ocupación" />
+                    </div>
+                    <p class="field-error hidden" data-error-for="motherOccupation"></p>
+                  </label>
+                </div>
+
+                <div class="grid gap-4 lg:grid-cols-[1.1fr_0.9fr_1fr_1fr]">
+                  <label class="block space-y-2">
+                    <span class="text-sm font-medium text-slate-200">Esposa(o)</span>
+                    <div class="input-shell">
+                      <i class="fa-solid fa-user text-slate-400"></i>
+                      <input class="form-input" name="spouseName" type="text" placeholder="Nombre de la pareja" />
+                    </div>
+                  </label>
+
+                  <label class="block space-y-2">
+                    <span class="text-sm font-medium text-slate-200">Estado</span>
+                    <div class="input-shell">
+                      <i class="fa-solid fa-heart-circle-check text-slate-400"></i>
+                      <select class="form-input" name="spouseStatus">
+                        <option value="">Selecciona</option>
+                        <option value="Vivo">Vivo</option>
+                        <option value="Finado">Finado</option>
+                      </select>
+                    </div>
+                  </label>
+
+                  <label class="block space-y-2">
+                    <span class="text-sm font-medium text-slate-200">Domicilio</span>
+                    <div class="input-shell">
+                      <i class="fa-solid fa-house text-slate-400"></i>
+                      <input class="form-input" name="spouseAddress" type="text" placeholder="Domicilio" />
+                    </div>
+                  </label>
+
+                  <label class="block space-y-2">
+                    <span class="text-sm font-medium text-slate-200">Ocupación</span>
+                    <div class="input-shell">
+                      <i class="fa-solid fa-briefcase text-slate-400"></i>
+                      <input class="form-input" name="spouseOccupation" type="text" placeholder="Ocupación" />
+                    </div>
+                  </label>
+                </div>
+
+                <div class="grid gap-4 lg:grid-cols-[1.2fr_1fr_1fr]">
+                  <label class="block space-y-2">
+                    <span class="text-sm font-medium text-slate-200">Nombres de los hijos</span>
+                    <div class="input-shell textarea-shell">
+                      <i class="fa-solid fa-children text-slate-400"></i>
+                      <textarea class="form-input min-h-28 resize-none" name="childrenNames" placeholder="Nombres de los hijos"></textarea>
+                    </div>
+                  </label>
+
+                  <label class="block space-y-2">
+                    <span class="text-sm font-medium text-slate-200">Domicilio</span>
+                    <div class="input-shell textarea-shell">
+                      <i class="fa-solid fa-house-chimney text-slate-400"></i>
+                      <textarea class="form-input min-h-28 resize-none" name="childrenAddress" placeholder="Domicilio de los hijos"></textarea>
+                    </div>
+                  </label>
+
+                  <label class="block space-y-2">
+                    <span class="text-sm font-medium text-slate-200">Ocupación</span>
+                    <div class="input-shell textarea-shell">
+                      <i class="fa-solid fa-briefcase text-slate-400"></i>
+                      <textarea class="form-input min-h-28 resize-none" name="childrenOccupation" placeholder="Ocupación de los hijos"></textarea>
+                    </div>
+                  </label>
+                </div>
+              </div>
+            </article>
+
+            <article class="glass-card rounded-[2rem] p-6 lg:p-7">
+              <div class="section-header">
+                <div class="icon-wrap">
+                  <i class="fa-solid fa-graduation-cap text-brand-400"></i>
+                </div>
+                <div>
+                  <h3 class="text-lg font-semibold text-white">Escolaridad</h3>
+                  <p class="text-sm text-slate-400">Nombre de la escuela, domicilio, fechas y certificado.</p>
+                </div>
+              </div>
+
+              <div class="mt-6 space-y-5" data-field="educationRecords">
+                <div class="grid gap-4 rounded-3xl border border-white/10 bg-white/5 p-4 lg:grid-cols-[1.15fr_0.9fr_0.8fr_0.8fr_1fr]">
+                  <p class="text-sm font-semibold text-white lg:pt-3">Primaria</p>
+                  <label class="block space-y-2">
+                    <span class="text-xs uppercase tracking-[0.2em] text-slate-500">Escuela o instituto</span>
+                    <div class="input-shell">
+                      <i class="fa-solid fa-school text-slate-400"></i>
+                      <input class="form-input" name="educationPrimarySchool" type="text" placeholder="Primaria" />
+                    </div>
+                  </label>
+                  <label class="block space-y-2">
+                    <span class="text-xs uppercase tracking-[0.2em] text-slate-500">Domicilio</span>
+                    <div class="input-shell">
+                      <i class="fa-solid fa-location-dot text-slate-400"></i>
+                      <input class="form-input" name="educationPrimaryAddress" type="text" placeholder="Domicilio" />
+                    </div>
+                  </label>
+                  <label class="block space-y-2">
+                    <span class="text-xs uppercase tracking-[0.2em] text-slate-500">Fecha inicio</span>
+                    <div class="input-shell">
+                      <i class="fa-regular fa-calendar text-slate-400"></i>
+                      <input class="form-input" name="educationPrimaryStartDate" type="date" />
+                    </div>
+                  </label>
+                  <label class="block space-y-2">
+                    <span class="text-xs uppercase tracking-[0.2em] text-slate-500">Fecha término / Certificado</span>
+                    <div class="grid gap-3">
+                      <div class="input-shell">
+                        <i class="fa-regular fa-calendar-check text-slate-400"></i>
+                        <input class="form-input" name="educationPrimaryEndDate" type="date" />
+                      </div>
+                      <div class="input-shell">
+                        <i class="fa-solid fa-certificate text-slate-400"></i>
+                        <input class="form-input" name="educationPrimaryCertificate" type="text" placeholder="Certificado que lo avala" />
+                      </div>
+                    </div>
+                  </label>
+                </div>
+
+                <div class="grid gap-4 rounded-3xl border border-white/10 bg-white/5 p-4 lg:grid-cols-[1.15fr_0.9fr_0.8fr_0.8fr_1fr]">
+                  <p class="text-sm font-semibold text-white lg:pt-3">Secundaria</p>
+                  <label class="block space-y-2">
+                    <span class="text-xs uppercase tracking-[0.2em] text-slate-500">Escuela o instituto</span>
+                    <div class="input-shell">
+                      <i class="fa-solid fa-school text-slate-400"></i>
+                      <input class="form-input" name="educationSecondarySchool" type="text" placeholder="Secundaria" />
+                    </div>
+                  </label>
+                  <label class="block space-y-2">
+                    <span class="text-xs uppercase tracking-[0.2em] text-slate-500">Domicilio</span>
+                    <div class="input-shell">
+                      <i class="fa-solid fa-location-dot text-slate-400"></i>
+                      <input class="form-input" name="educationSecondaryAddress" type="text" placeholder="Domicilio" />
+                    </div>
+                  </label>
+                  <label class="block space-y-2">
+                    <span class="text-xs uppercase tracking-[0.2em] text-slate-500">Fecha inicio</span>
+                    <div class="input-shell">
+                      <i class="fa-regular fa-calendar text-slate-400"></i>
+                      <input class="form-input" name="educationSecondaryStartDate" type="date" />
+                    </div>
+                  </label>
+                  <label class="block space-y-2">
+                    <span class="text-xs uppercase tracking-[0.2em] text-slate-500">Fecha término / Certificado</span>
+                    <div class="grid gap-3">
+                      <div class="input-shell">
+                        <i class="fa-regular fa-calendar-check text-slate-400"></i>
+                        <input class="form-input" name="educationSecondaryEndDate" type="date" />
+                      </div>
+                      <div class="input-shell">
+                        <i class="fa-solid fa-certificate text-slate-400"></i>
+                        <input class="form-input" name="educationSecondaryCertificate" type="text" placeholder="Certificado que lo avala" />
+                      </div>
+                    </div>
+                  </label>
+                </div>
+
+                <div class="grid gap-4 rounded-3xl border border-white/10 bg-white/5 p-4 lg:grid-cols-[1.15fr_0.9fr_0.8fr_0.8fr_1fr]">
+                  <p class="text-sm font-semibold text-white lg:pt-3">Preparatoria o vocacional</p>
+                  <label class="block space-y-2">
+                    <span class="text-xs uppercase tracking-[0.2em] text-slate-500">Escuela o instituto</span>
+                    <div class="input-shell">
+                      <i class="fa-solid fa-school text-slate-400"></i>
+                      <input class="form-input" name="educationHighSchoolSchool" type="text" placeholder="Preparatoria o vocacional" />
+                    </div>
+                  </label>
+                  <label class="block space-y-2">
+                    <span class="text-xs uppercase tracking-[0.2em] text-slate-500">Domicilio</span>
+                    <div class="input-shell">
+                      <i class="fa-solid fa-location-dot text-slate-400"></i>
+                      <input class="form-input" name="educationHighSchoolAddress" type="text" placeholder="Domicilio" />
+                    </div>
+                  </label>
+                  <label class="block space-y-2">
+                    <span class="text-xs uppercase tracking-[0.2em] text-slate-500">Fecha inicio</span>
+                    <div class="input-shell">
+                      <i class="fa-regular fa-calendar text-slate-400"></i>
+                      <input class="form-input" name="educationHighSchoolStartDate" type="date" />
+                    </div>
+                  </label>
+                  <label class="block space-y-2">
+                    <span class="text-xs uppercase tracking-[0.2em] text-slate-500">Fecha término / Certificado</span>
+                    <div class="grid gap-3">
+                      <div class="input-shell">
+                        <i class="fa-regular fa-calendar-check text-slate-400"></i>
+                        <input class="form-input" name="educationHighSchoolEndDate" type="date" />
+                      </div>
+                      <div class="input-shell">
+                        <i class="fa-solid fa-certificate text-slate-400"></i>
+                        <input class="form-input" name="educationHighSchoolCertificate" type="text" placeholder="Certificado que lo avala" />
+                      </div>
+                    </div>
+                  </label>
+                </div>
+
+                <div class="grid gap-4 rounded-3xl border border-white/10 bg-white/5 p-4 lg:grid-cols-[1.15fr_0.9fr_0.8fr_0.8fr_1fr]">
+                  <p class="text-sm font-semibold text-white lg:pt-3">Profesional</p>
+                  <label class="block space-y-2">
+                    <span class="text-xs uppercase tracking-[0.2em] text-slate-500">Escuela o instituto</span>
+                    <div class="input-shell">
+                      <i class="fa-solid fa-school text-slate-400"></i>
+                      <input class="form-input" name="educationProfessionalSchool" type="text" placeholder="Profesional" />
+                    </div>
+                  </label>
+                  <label class="block space-y-2">
+                    <span class="text-xs uppercase tracking-[0.2em] text-slate-500">Domicilio</span>
+                    <div class="input-shell">
+                      <i class="fa-solid fa-location-dot text-slate-400"></i>
+                      <input class="form-input" name="educationProfessionalAddress" type="text" placeholder="Domicilio" />
+                    </div>
+                  </label>
+                  <label class="block space-y-2">
+                    <span class="text-xs uppercase tracking-[0.2em] text-slate-500">Fecha inicio</span>
+                    <div class="input-shell">
+                      <i class="fa-regular fa-calendar text-slate-400"></i>
+                      <input class="form-input" name="educationProfessionalStartDate" type="date" />
+                    </div>
+                  </label>
+                  <label class="block space-y-2">
+                    <span class="text-xs uppercase tracking-[0.2em] text-slate-500">Fecha término / Certificado</span>
+                    <div class="grid gap-3">
+                      <div class="input-shell">
+                        <i class="fa-regular fa-calendar-check text-slate-400"></i>
+                        <input class="form-input" name="educationProfessionalEndDate" type="date" />
+                      </div>
+                      <div class="input-shell">
+                        <i class="fa-solid fa-certificate text-slate-400"></i>
+                        <input class="form-input" name="educationProfessionalCertificate" type="text" placeholder="Certificado que lo avala" />
+                      </div>
+                    </div>
+                  </label>
+                </div>
+
+                <div class="grid gap-4 rounded-3xl border border-white/10 bg-white/5 p-4 lg:grid-cols-[1.15fr_0.9fr_0.8fr_0.8fr_1fr]">
+                  <p class="text-sm font-semibold text-white lg:pt-3">Comercial u otras</p>
+                  <label class="block space-y-2">
+                    <span class="text-xs uppercase tracking-[0.2em] text-slate-500">Escuela o instituto</span>
+                    <div class="input-shell">
+                      <i class="fa-solid fa-school text-slate-400"></i>
+                      <input class="form-input" name="educationOtherSchool" type="text" placeholder="Comercial u otras" />
+                    </div>
+                  </label>
+                  <label class="block space-y-2">
+                    <span class="text-xs uppercase tracking-[0.2em] text-slate-500">Domicilio</span>
+                    <div class="input-shell">
+                      <i class="fa-solid fa-location-dot text-slate-400"></i>
+                      <input class="form-input" name="educationOtherAddress" type="text" placeholder="Domicilio" />
+                    </div>
+                  </label>
+                  <label class="block space-y-2">
+                    <span class="text-xs uppercase tracking-[0.2em] text-slate-500">Fecha inicio</span>
+                    <div class="input-shell">
+                      <i class="fa-regular fa-calendar text-slate-400"></i>
+                      <input class="form-input" name="educationOtherStartDate" type="date" />
+                    </div>
+                  </label>
+                  <label class="block space-y-2">
+                    <span class="text-xs uppercase tracking-[0.2em] text-slate-500">Fecha término / Certificado</span>
+                    <div class="grid gap-3">
+                      <div class="input-shell">
+                        <i class="fa-regular fa-calendar-check text-slate-400"></i>
+                        <input class="form-input" name="educationOtherEndDate" type="date" />
+                      </div>
+                      <div class="input-shell">
+                        <i class="fa-solid fa-certificate text-slate-400"></i>
+                        <input class="form-input" name="educationOtherCertificate" type="text" placeholder="Certificado que lo avala" />
+                      </div>
+                    </div>
+                  </label>
+                </div>
+
+                <p class="field-error hidden" data-error-for="educationRecords"></p>
+              </div>
+            </article>
+
+            <article class="glass-card rounded-[2rem] p-6 lg:p-7">
+              <div class="section-header">
+                <div class="icon-wrap">
+                  <i class="fa-solid fa-circle-check text-accent-400"></i>
+                </div>
+                <div>
+                  <h3 class="text-lg font-semibold text-white">Confirmación</h3>
+                  <p class="text-sm text-slate-400">Validación final antes de enviar a Supabase.</p>
+                </div>
+              </div>
+
+              <div class="mt-6 grid gap-5 lg:grid-cols-[1fr_auto] lg:items-end">
+                <div>
+                  <label class="inline-flex items-start gap-3 rounded-2xl border border-white/10 bg-white/5 px-4 py-4 text-sm leading-6 text-slate-300" data-field="declaration">
+                    <input class="mt-1 h-4 w-4 rounded border-white/20 bg-slate-900 text-accent-400 focus:ring-accent-400" name="declaration" type="checkbox" />
+                    Confirmo que los datos capturados en esta solicitud de empleo son verídicos y autorizo su almacenamiento para fines de reclutamiento.
+                  </label>
+                  <p class="field-error hidden" data-error-for="declaration"></p>
+                </div>
+
+                <button type="submit" class="primary-btn lg:min-w-56">
+                  <i class="fa-solid fa-paper-plane"></i>
+                  Enviar solicitud
+                </button>
+              </div>
+            </article>
+          </form>
+        </section>
+      </main>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="script.js"></script>
+  </body>
+</html>
